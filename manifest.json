@@ -1,0 +1,8 @@
+{
+    "name": "Hybrid Cloud Storage",
+    "short_name": "HybridStorage",
+    "start_url": "/",
+    "display": "standalone",
+    "theme_color": "#e66a6c",
+    "background_color": "#e66a6c"
+}
