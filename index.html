@@ -2,9 +2,10 @@
 <html lang="en">
 
 <head>
-  <link rel="manifest" href="manifest.json">
   <script src="serviceworker.js"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-31PPT6CB61"></script>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.357.0.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
@@ -16,9 +17,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <title>Any Share</title>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3403539919880614"
-    crossorigin="anonymous"></script>
+  <title>Hybrid Storage</title>
   <script>
    let isDropHereVisible = false;
 
@@ -78,40 +77,26 @@ function handleFiles(files) {
 <body>
  
   <div class="card">
-    <h1>Any Share</h1>
+    <h1>Hybrid Storage</h1>
 
     <h2>Upload File</h2>
     <input type="file" id="file" onchange="flesize()" /><br>
     
-    <center><button id="upload" onclick="uploadImage()">Upload<img id="uping" src="upload.png" alt="none" /></button>
+    <center><button id="upload" onclick="uploadImage()">Upload<img id="uping" src="images/upload.png" alt="none" /></button>
     </center>
-
-    <center>
-      <div id="ShowUniqueID" hidden>
-        <p>Unique ID</p><input type="text" id="showunique" value="23456" disabled></input>
+    <br />
+    <left>
+      <div id="myProgress" style="display:none;">
+        <div id="myBar"></div>
       </div>
-    </center>
-    <!-- <br> -->
-    <div class="Download" id="downloadiv">
-      <h2>Receive File</h2>
-
-      <input type="text" id="unique" placeholder="Enter Unique ID"><br>
-      <center><button id="show" onclick="showimage()">Download<img id="downimg" src="download.png"
-            alt="none" /></button>
-    </div>
-    </center>
-
+    </left>
   </div>
   <center>
     <div class="Drop-here">
       <h1 class="Drop-text">Drop Here</h1>
     </div>
   </center>
-  <p id="note">(Note: Upload limit has been increased to 100MB)</p>
+  
 </body>
-<script src="https://sdk.amazonaws.com/js/aws-sdk-2.357.0.min.js"></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="script.js"></script>
-<script src="awsconfig.js"></script>
-
+<script type="text/javascript" src="script.js"></script>
 </html>

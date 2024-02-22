@@ -7,8 +7,7 @@ self.addEventListener('install', event => {
         '/',
         '/index.html',
         '/style.css',
-        '/script.js',
-        '/awsconfig.js'
+        '/script.js'
       ]))
   );
 });

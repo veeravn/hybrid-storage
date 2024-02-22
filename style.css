@@ -30,6 +30,17 @@ body {
   background-color: #e66a6c;
 }
 
+#myProgress {
+  width: 100%;
+  background-color: grey;
+}
+
+#myBar {
+  width: 1%;
+  height: 30px;
+  background-color: green;
+}
+
 h1 {
   /* animation: flicker 1.5s infinite alternate; */
   color: rgb(0, 0, 0);
