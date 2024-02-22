@@ -1,15 +1,21 @@
+import { XhrHttpHandler } from "@aws-sdk/xhr-http-handler";
+let awsOptions = {
+  accessKeyId: 'AKIATQQEVDB2DOHAALFZ',
+  secretAccessKey: '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',
+  region: 'us-east-1',
+  bucketName: 'hybrid-storage-bucket'
+};
+AWS.XhrHttpHandler
 // import entire SDK
-let AWS = require('aws-sdk');
-
-AWS.config({
+AWS.config.update({
     accessKeyId: awsOptions.accessKeyId, 
-    secretAccessKey: awsOptions.secretAccessKey, 
-    region: awsOptions.region
+    secretAccessKey: awsOptions.secretAccessKey
 });
 
-var s3 = new AWS.S3({
-  apiVersion: '2006-03-01',
-  params: { Bucket: awsOptions.bucketName }
+var s3 = new AWS.S3.ManagedUpload({ 
+  region: awsOptions.region,
+  requestHandler: new XhrHttpHandler({}),
+  apiVersion: '2006-03-01'
 });
 
 // Listen for form submit
@@ -20,30 +26,23 @@ function uploadImage() {
     document.getElementById("upload").innerHTML = "Uploading...";
     var file = document.getElementById("file").files[0];
     var fileName = file.name;
-    var filePath = 'hybrid-storage-bucket-path/' + fileName;
-    var fileUrl = 'https://' + awsOptions.region + '.amazonaws.com/my-first-bucket/' + filePath;
-    var upload = new s3.ManagedUpload({
-      params: {
-        Key: filePath,
-        Body: file,
-      },
-    }.on('httpUploadProgress', function (progress) {
+    var filePath = awsOptions.bucketName + '-path/' + fileName;
+    var fileUrl = 'https://' + awsOptions.region + '.amazonaws.com/' + awsOptions.bucketName + '/' + filePath;
+    var upload = s3.upload({Bucket: awsOptions.bucketName, Key: filePath, Body: file, ACL: "private"});
+    promise = upload.promise();
+
+    promise.then('httpUploadProgress', function (progress) {
       var uploaded = parseInt((progress.loaded * 100) / progress.total);
       $("progress").attr('value', uploaded);
       console.log("Upload is " + progress + "% done");
       document.getElementById("upload").innerHTML = "Uploading" + " " + progress + "%...";
-    }));
-    var promise = upload.promise();
-    promise.then( function (err) {
-      if (err) {
-        reject('error');
-      }
-      alert('Successfully Uploaded!');
     }, function (data) {
-      document.getElementById("upload").innerHTML = "Upload Successful";
-      //Make file input empty
-      document.getElementById("file").value = "";
-    });   
+      alert("Successfully uploaded photo.");
+      document.getElementById("upload").innerHTML = "Upload"
+    },
+    function (err) {
+      return alert("There was an error uploading your photo: ", err.message);
+    }); 
   } else {
     var uploadtext = document.getElementById("upload").innerHTML;
     document.getElementById("upload").innerHTML = "Please select a file";
